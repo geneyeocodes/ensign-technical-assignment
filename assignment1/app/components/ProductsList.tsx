@@ -1,8 +1,9 @@
-import ProductCard, { Product } from "./ProductCard";
+import Product from "../types/Product";
+import ProductCard from "./ProductCard";
 
 export default async function ProductsList() {
     const products: Product[] = await getProducts();
-    console.log(products);
+    // console.log(products);
     return (
         <div className="bg-slate-900 px-32 py-16 border-red-200">
             <div className="grid grid-cols-3 gap-16 justify-items-center">
