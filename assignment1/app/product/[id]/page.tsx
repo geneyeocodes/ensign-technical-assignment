@@ -1,6 +1,7 @@
 import Header from "@/app/components/Header";
 import Product from "@/app/types/Product";
 import AddToCartButton from "./AddToCartButton";
+import AddToCart from "./AddToCart";
 
 export default async function ProductPage({
     params,
@@ -44,7 +45,7 @@ export default async function ProductPage({
                     {product.description}
                 </h1>
                 <h1 className="text-4xl mt-8">${product.price}</h1>
-                <AddToCartButton product={product} />
+                <AddToCart product={product} />
             </div>
         </div>
     );

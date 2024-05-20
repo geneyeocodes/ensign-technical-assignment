@@ -1,18 +1,14 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-export type CartProduct = {
-    productId: number;
-    qty: number;
-    totalPrice: number;
-};
+import Product from "../types/Product";
+import CartProduct from "../types/CartProduct";
 
 type CartStore = {
     totalQty: number;
     totalAmt: number;
     products: { [productId: string]: CartProduct };
-    addProduct: (productId: number, unitPrice: number) => void;
-    removeProduct: (productId: number, unitPrice: number) => void;
+    addProduct: (product: Product) => void;
+    removeProduct: (product: Product) => void;
     clearCart: () => void;
 };
 
@@ -22,54 +18,57 @@ export const useCartStore = create<CartStore>()(
             totalQty: 0,
             totalAmt: 0,
             products: {},
-            addProduct: (productId: number, unitPrice: number) =>
+            addProduct: (product: Product) =>
                 set((state) => ({
                     totalQty: state.totalQty + 1,
-                    totalAmt: state.totalAmt + unitPrice,
-                    products: state.products.hasOwnProperty(productId)
+                    totalAmt: state.totalAmt + product.price,
+                    products: state.products.hasOwnProperty(product.id)
                         ? {
                               ...state.products,
-                              [productId]: {
-                                  ...state.products[productId],
-                                  qty: state.products[productId].qty + 1,
+                              [product.id]: {
+                                  ...state.products[product.id],
+                                  qty: state.products[product.id].qty + 1,
                                   totalPrice:
-                                      state.products[productId].totalPrice +
-                                      unitPrice,
+                                      state.products[product.id].totalPrice +
+                                      product.price,
                               },
                           }
                         : {
                               ...state.products,
-                              [productId]: {
-                                  productId: productId,
+                              [product.id]: {
+                                  productId: product.id,
+                                  title: product.title,
+                                  unitPrice: product.price,
+                                  image: product.image,
                                   qty: 1,
-                                  totalPrice: unitPrice,
+                                  totalPrice: product.price,
                               },
                           },
                 })),
-            removeProduct: (productId: number, unitPrice: number) =>
+            removeProduct: (product: Product) =>
                 set((state) => ({
                     totalQty: state.totalQty - 1,
-                    totalAmt: state.totalAmt - unitPrice,
+                    totalAmt: Math.max(0, state.totalAmt - product.price),
                     products:
-                        state.products[productId].qty == 1
-                            ? () => {
-                                  delete state.products[productId];
-                                  return state.products;
+                        state.products[product.id].qty == 1
+                            ? {
+                                  ...state.products,
+                                  [product.id]: undefined,
                               }
                             : {
                                   ...state.products,
-                                  [productId]: {
-                                      ...state.products[productId],
-                                      qty: state.products[productId].qty - 1,
+                                  [product.id]: {
+                                      ...state.products[product.id],
+                                      qty: state.products[product.id].qty - 1,
                                       totalPrice:
-                                          state.products[productId].totalPrice -
-                                          unitPrice,
+                                          state.products[product.id]
+                                              .totalPrice - product.price,
                                   },
                               },
                 })),
             clearCart: () =>
                 set((state) => ({ totalQty: 0, totalAmt: 0, products: {} })),
         }),
-        { name: "cartStore" }
+        { name: "cartStore", skipHydration: true }
     )
 );
