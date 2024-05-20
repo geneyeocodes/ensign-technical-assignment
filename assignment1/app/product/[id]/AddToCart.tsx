@@ -12,9 +12,9 @@ interface IProps {
 export default function AddToCart({ product }: IProps) {
     const { products } = useCartStore();
 
-    return products.hasOwnProperty(product.id) ? (
-        <QuantityController product={product} qty={products[product.id].qty} />
-    ) : (
+    return products[product.id] == undefined ? (
         <AddToCartButton product={product} />
+    ) : (
+        <QuantityController product={product} qty={products[product.id].qty} />
     );
 }

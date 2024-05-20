@@ -22,28 +22,29 @@ export const useCartStore = create<CartStore>()(
                 set((state) => ({
                     totalQty: state.totalQty + 1,
                     totalAmt: state.totalAmt + product.price,
-                    products: state.products.hasOwnProperty(product.id)
-                        ? {
-                              ...state.products,
-                              [product.id]: {
-                                  ...state.products[product.id],
-                                  qty: state.products[product.id].qty + 1,
-                                  totalPrice:
-                                      state.products[product.id].totalPrice +
-                                      product.price,
+                    products:
+                        state.products[product.id] == undefined
+                            ? {
+                                  ...state.products,
+                                  [product.id]: {
+                                      productId: product.id,
+                                      title: product.title,
+                                      unitPrice: product.price,
+                                      image: product.image,
+                                      qty: 1,
+                                      totalPrice: product.price,
+                                  },
+                              }
+                            : {
+                                  ...state.products,
+                                  [product.id]: {
+                                      ...state.products[product.id],
+                                      qty: state.products[product.id].qty + 1,
+                                      totalPrice:
+                                          state.products[product.id]
+                                              .totalPrice + product.price,
+                                  },
                               },
-                          }
-                        : {
-                              ...state.products,
-                              [product.id]: {
-                                  productId: product.id,
-                                  title: product.title,
-                                  unitPrice: product.price,
-                                  image: product.image,
-                                  qty: 1,
-                                  totalPrice: product.price,
-                              },
-                          },
                 })),
             removeProduct: (product: Product) =>
                 set((state) => ({
