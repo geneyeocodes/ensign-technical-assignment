@@ -10,7 +10,7 @@ export default function CartCheckout() {
             </h1>
             <button
                 onClick={clearCart}
-                className="text-2xl font-medium rounded-xl px-40 lg:px-10 py-2 lg:py-4 ml-8 mr-12 2xl:mr-64 mb-2 lg:my-4 bg-green-800 hover:bg-green-700"
+                className="text-2xl font-medium rounded-xl w-5/6 lg:w-40 py-2 lg:py-4 ml-8 mr-12 2xl:mr-64 mb-2 lg:my-4 bg-green-800 hover:bg-green-700"
             >
                 Checkout
             </button>
