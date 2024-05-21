@@ -5,7 +5,7 @@ interface IProps {
     product: CartProduct;
 }
 
-export default function CartProductCard({ product }: IProps) {
+export default function CartProductTile({ product }: IProps) {
     return (
         <div className="flex items-center my-6">
             <div className="bg-white">
