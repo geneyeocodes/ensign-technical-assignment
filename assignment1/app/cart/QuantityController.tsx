@@ -18,7 +18,7 @@ export default function QuantityController({ product }: IProps) {
         category: "",
     };
     return (
-        <div className="flex w-40 h-8 mx-8">
+        <div className="flex w-40 h-8 my-2 lg:mx-8">
             <button
                 onClick={() => removeProduct(productProp)}
                 className="w-8 h-8 border-2 flex items-center justify-center text-xl hover:bg-slate-700"

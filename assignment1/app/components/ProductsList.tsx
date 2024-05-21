@@ -6,7 +6,7 @@ export default async function ProductsList() {
     // console.log(products);
     return (
         <div className="bg-slate-900 px-32 py-16 border-red-200">
-            <div className="grid grid-cols-3 gap-16 justify-items-center">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-16 justify-items-center">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

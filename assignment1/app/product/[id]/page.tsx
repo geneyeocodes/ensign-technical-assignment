@@ -14,7 +14,7 @@ export default async function ProductPage({
     return (
         <div className="flex flex-col h-screen">
             <Header />
-            <div className="grow bg-slate-900 py-12 px-64 flex flex-col items-center">
+            <div className="grow bg-slate-900 py-12 px-12 xl:px-64 flex flex-col items-center">
                 <img
                     src={product.image}
                     className="max-h-[26rem] object-contain"
